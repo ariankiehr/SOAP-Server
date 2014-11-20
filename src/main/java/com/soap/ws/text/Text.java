@@ -1,6 +1,5 @@
 package com.soap.ws.text;
 
-import java.util.LinkedList;
 import java.util.List;
 
 import javax.jws.WebService;
@@ -24,20 +23,8 @@ public class Text implements IText {
 	public List<Tag> detectLanguage(String text) {
 		// TODO Auto-generated method stub
 		
-		Tag t = new Tag();
-		t.language = "Espanol";
-		t.probability = 0.77f;
 		
-		Tag t1 = new Tag();
-		t1.language = "Inlges";
-		t1.probability = 0.77f;
-		
-		
-		List<Tag> l = new LinkedList<Tag>();
-		l.add(t);
-		l.add(t1);
-		
-		return l;
+		return null;
 	}
 
 }

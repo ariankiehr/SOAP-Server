@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<xs:schema version="1.0" targetNamespace="http://hash.ws.soap.com/" xmlns:tns="http://hash.ws.soap.com/" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+
+  <xs:element name="breakHash" type="tns:breakHash"/>
+
+  <xs:element name="breakHashResponse" type="tns:breakHashResponse"/>
+
+  <xs:element name="getHashType" type="tns:getHashType"/>
+
+  <xs:element name="getHashTypeResponse" type="tns:getHashTypeResponse"/>
+
+  <xs:element name="getMD5" type="tns:getMD5"/>
+
+  <xs:element name="getMD5Response" type="tns:getMD5Response"/>
+
+  <xs:element name="getPBKDF2" type="tns:getPBKDF2"/>
+
+  <xs:element name="getPBKDF2Response" type="tns:getPBKDF2Response"/>
+
+  <xs:element name="getSHA1" type="tns:getSHA1"/>
+
+  <xs:element name="getSHA1Response" type="tns:getSHA1Response"/>
+
+  <xs:element name="getSHA256" type="tns:getSHA256"/>
+
+  <xs:element name="getSHA256Response" type="tns:getSHA256Response"/>
+
+  <xs:element name="getSHA384" type="tns:getSHA384"/>
+
+  <xs:element name="getSHA384Response" type="tns:getSHA384Response"/>
+
+  <xs:element name="getSHA512" type="tns:getSHA512"/>
+
+  <xs:element name="getSHA512Response" type="tns:getSHA512Response"/>
+
+  <xs:element name="hashToBreak" type="tns:hashToBreak"/>
+
+  <xs:complexType name="getSHA1">
+    <xs:sequence>
+      <xs:element name="arg0" type="xs:string" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="getSHA1Response">
+    <xs:sequence>
+      <xs:element name="return" type="xs:string" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="getPBKDF2">
+    <xs:sequence>
+      <xs:element name="arg0" type="xs:string" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="getPBKDF2Response">
+    <xs:sequence>
+      <xs:element name="return" type="xs:string" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="getSHA384">
+    <xs:sequence>
+      <xs:element name="arg0" type="xs:string" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="getSHA384Response">
+    <xs:sequence>
+      <xs:element name="return" type="xs:string" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="breakHash">
+    <xs:sequence>
+      <xs:element name="arg0" type="tns:hashToBreak" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="hashToBreak">
+    <xs:sequence>
+      <xs:element name="hash" type="xs:string" minOccurs="0"/>
+      <xs:element name="type" type="xs:string" minOccurs="0"/>
+      <xs:element name="timeout" type="xs:int" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="breakHashResponse">
+    <xs:sequence>
+      <xs:element name="return" type="xs:string" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="getSHA256">
+    <xs:sequence>
+      <xs:element name="arg0" type="xs:string" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="getSHA256Response">
+    <xs:sequence>
+      <xs:element name="return" type="xs:string" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="getHashType">
+    <xs:sequence>
+      <xs:element name="arg0" type="xs:string" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="getHashTypeResponse">
+    <xs:sequence>
+      <xs:element name="return" type="xs:string" minOccurs="0" maxOccurs="unbounded"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="getSHA512">
+    <xs:sequence>
+      <xs:element name="arg0" type="xs:string" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="getSHA512Response">
+    <xs:sequence>
+      <xs:element name="return" type="xs:string" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="getMD5">
+    <xs:sequence>
+      <xs:element name="arg0" type="xs:string" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="getMD5Response">
+    <xs:sequence>
+      <xs:element name="return" type="xs:string" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+</xs:schema>
+

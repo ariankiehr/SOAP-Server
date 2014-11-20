@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<xs:schema version="1.0" targetNamespace="http://mail.ws.soap.com/" xmlns:tns="http://mail.ws.soap.com/" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+
+  <xs:element name="sendMail" type="tns:sendMail"/>
+
+  <xs:element name="sendMailInfo" type="tns:sendMailInfo"/>
+
+  <xs:element name="sendMailResponse" type="tns:sendMailResponse"/>
+
+  <xs:element name="validateMailAddress" type="tns:validateMailAddress"/>
+
+  <xs:element name="validateMailAddressResponse" type="tns:validateMailAddressResponse"/>
+
+  <xs:complexType name="validateMailAddress">
+    <xs:sequence>
+      <xs:element name="arg0" type="xs:string" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="validateMailAddressResponse">
+    <xs:sequence>
+      <xs:element name="return" type="xs:boolean"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="sendMail">
+    <xs:sequence>
+      <xs:element name="arg0" type="tns:sendMailInfo" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="sendMailInfo">
+    <xs:sequence>
+      <xs:element name="from" type="xs:string" minOccurs="0"/>
+      <xs:element name="pass" type="xs:string" minOccurs="0"/>
+      <xs:element name="to" type="xs:string" minOccurs="0" maxOccurs="unbounded"/>
+      <xs:element name="subject" type="xs:string" minOccurs="0"/>
+      <xs:element name="body" type="xs:string" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="sendMailResponse">
+    <xs:sequence>
+      <xs:element name="return" type="xs:boolean"/>
+    </xs:sequence>
+  </xs:complexType>
+</xs:schema>
+

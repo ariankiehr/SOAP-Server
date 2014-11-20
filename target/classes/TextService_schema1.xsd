@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<xs:schema version="1.0" targetNamespace="http://text.ws.soap.com/" xmlns:tns="http://text.ws.soap.com/" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+
+  <xs:element name="correctErrors" type="tns:correctErrors"/>
+
+  <xs:element name="correctErrorsResponse" type="tns:correctErrorsResponse"/>
+
+  <xs:element name="detectLanguage" type="tns:detectLanguage"/>
+
+  <xs:element name="detectLanguageResponse" type="tns:detectLanguageResponse"/>
+
+  <xs:element name="getMostUsedWords" type="tns:getMostUsedWords"/>
+
+  <xs:element name="getMostUsedWordsResponse" type="tns:getMostUsedWordsResponse"/>
+
+  <xs:element name="tag" type="tns:tag"/>
+
+  <xs:complexType name="detectLanguage">
+    <xs:sequence>
+      <xs:element name="arg0" type="xs:string" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="detectLanguageResponse">
+    <xs:sequence>
+      <xs:element name="return" type="tns:tag" minOccurs="0" maxOccurs="unbounded"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="tag">
+    <xs:sequence>
+      <xs:element name="lang" type="xs:string" minOccurs="0"/>
+      <xs:element name="prob" type="xs:float"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="correctErrors">
+    <xs:sequence>
+      <xs:element name="arg0" type="xs:string" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="correctErrorsResponse">
+    <xs:sequence>
+      <xs:element name="return" type="xs:string" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="getMostUsedWords">
+    <xs:sequence>
+      <xs:element name="arg0" type="xs:string" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="getMostUsedWordsResponse">
+    <xs:sequence>
+      <xs:element name="return" type="xs:string" minOccurs="0" maxOccurs="unbounded"/>
+    </xs:sequence>
+  </xs:complexType>
+</xs:schema>
+

@@ -33,7 +33,7 @@
 
   <xs:element name="getSHA512Response" type="tns:getSHA512Response"/>
 
-  <xs:element name="hashToBreak" type="tns:hashToBreak"/>
+  <xs:element name="root" type="tns:hashToBreak"/>
 
   <xs:complexType name="getSHA1">
     <xs:sequence>
@@ -79,9 +79,9 @@
 
   <xs:complexType name="hashToBreak">
     <xs:sequence>
-      <xs:element name="hash" type="xs:string" minOccurs="0"/>
-      <xs:element name="type" type="xs:string" minOccurs="0"/>
-      <xs:element name="timeout" type="xs:int" minOccurs="0"/>
+      <xs:element name="hash" type="xs:string"/>
+      <xs:element name="type" type="tns:EnumType"/>
+      <xs:element name="timeout" type="xs:int"/>
     </xs:sequence>
   </xs:complexType>
 
@@ -138,5 +138,12 @@
       <xs:element name="return" type="xs:string" minOccurs="0"/>
     </xs:sequence>
   </xs:complexType>
+
+  <xs:simpleType name="EnumType">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="MD5"/>
+      <xs:enumeration value="SHA1"/>
+    </xs:restriction>
+  </xs:simpleType>
 </xs:schema>
 

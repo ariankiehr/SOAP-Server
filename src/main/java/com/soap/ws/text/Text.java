@@ -22,8 +22,6 @@ public class Text implements IText {
 	@Override
 	public List<Tag> detectLanguage(String text) {
 		// TODO Auto-generated method stub
-		
-		
 		return null;
 	}
 

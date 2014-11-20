@@ -1,6 +1,12 @@
 package com.soap.ws.hash;
 
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
 import java.math.BigInteger;
+import java.net.URL;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.security.NoSuchProviderException;
@@ -8,6 +14,13 @@ import java.security.SecureRandom;
 import java.security.spec.InvalidKeySpecException;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.concurrent.Callable;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.Future;
+import java.util.concurrent.TimeUnit;
+import java.util.concurrent.TimeoutException;
 
 import javax.crypto.SecretKeyFactory;
 import javax.crypto.spec.PBEKeySpec;
@@ -36,7 +49,7 @@ public class Hash implements IHash {
 		String generatedPassword = null;
 		try {
 			MessageDigest md = MessageDigest.getInstance(type);
-			md.update(salt.getBytes());
+			//md.update(salt.getBytes());
 			byte[] bytes = md.digest(passwordToHash.getBytes());
 			StringBuilder sb = new StringBuilder();
 			for (int i = 0; i < bytes.length; i++) {
@@ -214,7 +227,7 @@ public class Hash implements IHash {
 	   	return false;
     }
 
-	public void _16(String hash){
+    private void _16(String hash){
 		if( hash.length()==4 && isAlpha(hash)==false && isAlphaNumeric(hash)==true){
 			solucion.add("CRC-16");
 		}
@@ -224,7 +237,7 @@ public class Hash implements IHash {
 		}
 	}
 
-	public void _32(String hash){
+	private void _32(String hash){
 	    if(hash.length()==8 && isNumeric(hash)==false && isAlpha(hash)==false && isAlphaNumeric(hash)==true) {
 	    	solucion.add("ADLER-32");
         	solucion.add("CRC-32");
@@ -237,12 +250,12 @@ public class Hash implements IHash {
 		}
 	}
 
-	public void _52(String hash) {
+	private void _52(String hash) {
 	    if(hash.length()==13 && isNumeric(hash)==false && isAlpha(hash)==false)
 	        solucion.add("DES(Unix)");
 	}
 	
-	public void _64(String hash){
+	private void _64(String hash){
 	    if(hash.length()==16 && isNumeric(hash)==false && isAlpha(hash)==false &&isAlphaNumeric(hash)==true){
 	        solucion.add("MD5(Half)");
 	        solucion.add("MD5(Middle)");
@@ -250,7 +263,7 @@ public class Hash implements IHash {
 	    }
 	}
 	
-	public void _128(String hash){
+	private void _128(String hash){
 	    if(hash.length()==32 && isNumeric(hash)==false && isAlpha(hash)==false &&isAlphaNumeric(hash)==true){
 	        solucion.add("Domain Cached Credentials - MD4(MD4(($pass)).(strtolower($username)))");
 	        solucion.add("Haval-128");
@@ -300,7 +313,7 @@ public class Hash implements IHash {
 	}
 	
 	
-	public void _136(String hash){
+	private void _136(String hash){
 	    if(hash.length()==34 && isNumeric(hash)==false && isAlpha(hash)==false &&isAlphaNumeric(hash)==true && hash.substring(0,2).equals("0x"))
 	        solucion.add("Lineage II C4");
 	    if(hash.length()==34 && isNumeric(hash)==false && isAlpha(hash)==false &&isAlphaNumeric(hash)==false &&  hash.substring(0,3).equals("$H$"))
@@ -311,12 +324,12 @@ public class Hash implements IHash {
 	        solucion.add("MD5(Wordpress)");
 	}
 
-	public void _148(String hash){
+	private void _148(String hash){
 	    if(hash.length()==37 && isNumeric(hash)==false && isAlpha(hash)==false &&  hash.substring(0,4).equals("$apr"))
 	        solucion.add("MD5(APR)");
 	}
 
-	public void _160(String hash){
+	private void _160(String hash){
 	    if(hash.length()==40 && isNumeric(hash)==false && isAlpha(hash)==false &&isAlphaNumeric(hash)==true){
 	        solucion.add("Haval-160");
 	        solucion.add("Haval-160(HMAC)");
@@ -349,12 +362,12 @@ public class Hash implements IHash {
 	    }
 	}
 	
-	public void _164(String hash){
+	private void _164(String hash){
 	    if(hash.length()==41 && isNumeric(hash)==false && isAlpha(hash)==false &&isAlphaNumeric(hash)==false &&  hash.substring(0,1).equals("*"))
 	        solucion.add("MySQL 160bit - SHA-1(SHA-1($pass))");
 	}
 	
-	public void _192(String hash){
+	private void _192(String hash){
 	    if(hash.length()==48 && isNumeric(hash)==false && isAlpha(hash)==false &&isAlphaNumeric(hash)==true){
 	        solucion.add("Haval-192");
 	        solucion.add("Haval-192(HMAC)");
@@ -363,17 +376,17 @@ public class Hash implements IHash {
 		}
 	}
 	
-	public void _196(String hash){
+	private void _196(String hash){
 	    if(hash.length()==49 && isNumeric(hash)==false && isAlpha(hash)==false &&isAlphaNumeric(hash)==false && hash.substring(32,33).equals(":"))
 	        solucion.add("md5($pass.$salt)");
 	}
 	
-	public void _208(String hash){
+	private void _208(String hash){
 	    if(hash.length()==52 && isNumeric(hash)==false && isAlpha(hash)==false &&isAlphaNumeric(hash)==false &&  hash.substring(0,5).equals("sha1$"))
 	        solucion.add("SHA-1(Django)");
 	}
 	
-	public void _224(String hash){
+	private void _224(String hash){
 	    if(hash.length()==56 && isNumeric(hash)==false && isAlpha(hash)==false &&isAlphaNumeric(hash)==true){
 	        solucion.add("Haval-224");
 	        solucion.add("Haval-224(HMAC)");
@@ -382,7 +395,7 @@ public class Hash implements IHash {
 		}
 	}
 	        
-	public void _256(String hash){
+	private void _256(String hash){
 	    if(hash.length()==64 && isNumeric(hash)==false && isAlpha(hash)==false &&isAlphaNumeric(hash)==true){
 	        solucion.add("SHA-256");
 	        solucion.add("SHA-256(HMAC)");
@@ -398,43 +411,43 @@ public class Hash implements IHash {
 		}
 	}
 	
-	public void _260(String hash){
+	private void _260(String hash){
 	    if(hash.length()==65 && isNumeric(hash)==false && isAlpha(hash)==false &&isAlphaNumeric(hash)==false &&  hash.substring(32,33).equals(":"))
 	        solucion.add("md5($pass.$salt) - Joomla");
 	    if(hash.length()==65 && isNumeric(hash)==false && isAlpha(hash)==false &&isAlphaNumeric(hash)==false && isLower(hash)==false &&  hash.substring(32,33).equals(":"))
 	        solucion.add("SAM - (LM_hash:NT_hash)");
 	}
 	
-	public void _312(String hash){
+	private void _312(String hash){
 	    if(hash.length()==78 && isNumeric(hash)==false && isAlpha(hash)==false &&isAlphaNumeric(hash)==false &&  hash.substring(0,6).equals("sha256"))
 	        solucion.add("SHA-256(Django)");
 	}
 	
-	public void _320(String hash){
+	private void _320(String hash){
 	    if(hash.length()==80 && isNumeric(hash)==false && isAlpha(hash)==false &&isAlphaNumeric(hash)==true) {
 	        solucion.add("RipeMD-320");
 	        solucion.add("RipeMD-320(HMAC)");
 		}
 	}
 	
-	public void _384(String hash){
+	private void _384(String hash){
 	    if(hash.length()==96 && isNumeric(hash)==false && isAlpha(hash)==false &&isAlphaNumeric(hash)==true){
 	        solucion.add("SHA-384");
 	        solucion.add("SHA-384(HMAC)");
 	    }
 	}
 	
-	public void _392(String hash){
+	private void _392(String hash){
 	    if(hash.length()==98 && isNumeric(hash)==false && isAlpha(hash)==false &&isAlphaNumeric(hash)==false &&  hash.substring(0,3).equals("$6$"))
 	        solucion.add("SHA-256");
 	}
 	
-	public void _440(String hash){
+	private void _440(String hash){
 	    if(hash.length()==110 && isNumeric(hash)==false && isAlpha(hash)==false &&isAlphaNumeric(hash)==false &&  hash.substring(0,6).equals("sha384"))
 	        solucion.add("SHA-384(Django)");
 	}
 	
-	public void _512(String hash){
+	private void _512(String hash){
 	    if(hash.length()==128 && isNumeric(hash)==false && isAlpha(hash)==false &&isAlphaNumeric(hash)==true) {
 	        solucion.add("SHA-512");
 	        solucion.add("SHA-512(HMAC)");
@@ -442,12 +455,80 @@ public class Hash implements IHash {
 	        solucion.add("Whirlpool(HMAC)");
 	    }
 	}
-	
 
 	@Override
-	public String breakHash(HashToBreak hashToBreak) {
-		// TODO Auto-generated method stub
-		return null;
+	public String breakHash(final HashToBreak hashToBreak) {
+		
+		ExecutorService executor = Executors.newCachedThreadPool();
+		Callable<Object> task = new Callable<Object>() {
+		   public Object call() {
+		      return breakHashLogic(hashToBreak);
+		   }
+		};
+		
+		Future<Object> future = executor.submit(task);
+		Object result = "";
+		try {
+		   result = future.get(hashToBreak.timeout, TimeUnit.MILLISECONDS); 
+		} catch (TimeoutException ex) {
+			return "CONTROL: Time out";
+		} catch (InterruptedException e) {
+		   // handle the interrupts
+		} catch (ExecutionException e) {
+		   // handle other exceptions
+		} finally {
+		   future.cancel(true);
+		   executor.shutdown();
+		}
+		
+		return result.toString();
+		
+	}
+	
+	public final String breakHashLogic(final HashToBreak hashToBreak) {
+		URL input = getClass().getResource("wordlist.txt");
+		
+		File wordlist = new File(input.getPath());
+		
+		BufferedReader br = null;
+		try {
+			br = new BufferedReader(new FileReader(wordlist));
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		}
+		
+		String line;
+		try {
+			while ((line = br.readLine()) != null) {
+				switch( hashToBreak.type ) {
+					case MD5 :
+						if( hashToBreak.hash.equals( getMD5(line)  ) ) {
+							return line;
+						}
+						break;
+						
+					case SHA1 :
+						if( hashToBreak.hash.equals( getSHA1(line)  ) ) {
+							return line;
+						}
+						break;
+				
+				}
+
+			}
+		} catch (IOException e1) {
+			e1.printStackTrace();
+		}
+		
+		try {
+			br.close();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		
+		
+		return "CONTROL: Hash no encontrado";
 	}
 
+	
 }

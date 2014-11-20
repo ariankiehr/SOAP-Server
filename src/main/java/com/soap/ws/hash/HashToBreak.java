@@ -5,17 +5,17 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
-@XmlRootElement
 @XmlAccessorType(XmlAccessType.FIELD)
+@XmlRootElement
 public class HashToBreak {
 	
-	@XmlElement(name = "hash")
+	@XmlElement(name = "hash", required = true)
 	public String hash;
 	
-	@XmlElement(name = "type")
-	public String hashType;
+	@XmlElement(name = "type", required = true)
+	public EnumType type; 
 	
-	@XmlElement(name = "timeout")
+	@XmlElement(name = "timeout", required = true)
 	public Integer timeout;
 
 }

@@ -32,7 +32,7 @@ import org.w3c.dom.Document;
 import org.xml.sax.SAXException;  
   
 public class MailValidationHandler implements LogicalHandler<LogicalMessageContext> {  
-    private String schemaUrl = "http://localhost/ws/Mail?xsd=1";  
+    private String schemaUrl = "http://localhost:9999/ws/Mail?xsd=1";  
   
     @Override  
     public boolean handleMessage(LogicalMessageContext context) {  

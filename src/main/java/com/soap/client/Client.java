@@ -5,25 +5,24 @@ import java.net.URL;
 import javax.xml.namespace.QName;
 import javax.xml.ws.Service;
 
+import com.soap.ws.text.IText;
+
 public class Client {
 
 	public static void main(String[] args) throws Exception {
 		 
-		/*URL url = new URL("http://localhost:80/ws/hello?wsdl");
+		URL url = new URL("http://localhost:9999/ws/Text?wsdl");
  
         //1st argument service URI, refer to wsdl document above
 		//2nd argument is service name, refer to wsdl document above
-        QName qname = new QName("http://cagon.fanjul.com/", "HelloWorldImplService");
+        QName qname = new QName("http://text.ws.soap.com/", "TextService");
  
         Service service = Service.create(url, qname);
  
-        HelloWorld hello = service.getPort(HelloWorld.class);
+        IText text = service.getPort(IText.class);
  
-        Pojo p = new Pojo();
-        p.cadena = "hola";
-        p.numero = 1;
-        
-        System.out.println(hello.getHelloWorldAsString( p ).cadena);*/
+   
+        System.out.println( text.detectLanguage( "sad" ).get(0).language  );
  
     }
  

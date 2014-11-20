@@ -32,7 +32,7 @@ import org.w3c.dom.Document;
 import org.xml.sax.SAXException;  
   
 public class TextValidationHandler implements LogicalHandler<LogicalMessageContext> {  
-    private String schemaUrl = "http://localhost/ws/Text?xsd=1";
+    private String schemaUrl = "http://localhost:9999/ws/Text?xsd=1";
   
     @Override  
     public boolean handleMessage(LogicalMessageContext context) {  

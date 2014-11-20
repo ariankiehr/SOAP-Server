@@ -71,6 +71,7 @@ public class Text implements IText {
             e.printStackTrace();
         }
 		return result;
+
 	}
     
 

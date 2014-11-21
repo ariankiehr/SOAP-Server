@@ -51,7 +51,7 @@ public class Mail implements IMail {
             transport.connect(host, mailInfo.from, mailInfo.pass);
             transport.sendMessage(message, message.getAllRecipients());
             transport.close();
-        } catch (MessagingException e) {
+        } catch (Exception e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
             return false ;

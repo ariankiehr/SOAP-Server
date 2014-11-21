@@ -1,5 +1,6 @@
 package com.soap.ws.text;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
@@ -14,6 +15,9 @@ import com.cybozu.labs.langdetect.Detector;
 import com.cybozu.labs.langdetect.DetectorFactory;
 import com.cybozu.labs.langdetect.LangDetectException;
 import com.cybozu.labs.langdetect.Language;
+
+import org.languagetool.*;
+import org.languagetool.rules.RuleMatch;
 
 @WebService(endpointInterface = "com.soap.ws.text.IText")
 public class Text implements IText { 
@@ -101,11 +105,29 @@ public class Text implements IText {
         return result;
         
     }
-
+    
     @Override
     public String correctErrors(String text) {
-        // TODO Auto-generated method stub
-        return null;
+        JLanguageTool langTool = new JLanguageTool(new org.languagetool.language.AmericanEnglish());
+        String suggestions = "" ;
+        try {
+            langTool.activateDefaultPatternRules();
+            List<RuleMatch> matches = langTool.check(text);
+            for (RuleMatch match : matches) {               
+                suggestions += "Potential error at line " +
+                        match.getEndLine() + ", column " +
+                        match.getColumn() + ": " + 
+                        match.getMessage() + "\n" +
+                        "Suggested correction: " +
+                        match.getSuggestedReplacements() + "\n";                
+            } 
+            
+            return suggestions;
+            
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+       return null;
     }
     
     

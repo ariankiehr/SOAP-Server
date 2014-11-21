@@ -1,8 +1,6 @@
 package com.soap.ws.text;
 
-import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
@@ -11,74 +9,28 @@ import javax.jws.WebService;
 
 import org.mcavallo.opencloud.Cloud;
 
-import com.cybozu.labs.langdetect.Detector;
-import com.cybozu.labs.langdetect.DetectorFactory;
-import com.cybozu.labs.langdetect.LangDetectException;
-import com.cybozu.labs.langdetect.Language;
 
 import org.languagetool.*;
 import org.languagetool.rules.RuleMatch;
 
+import  me.champeau.ld.UberLanguageDetector;
+
 @WebService(endpointInterface = "com.soap.ws.text.IText")
 public class Text implements IText { 
-	
-    private static boolean firstTime = true ;
-    private static String profileDirectory = "/home/leandro/Tesis/workspace/SOA/src/main/resources/langprofiles" ; //TODO quitar harcodeo 
-	/**
-	 * Carga los perfiles para poder operar con detectLangs.
-	 * @param profileDirectory
-	 * @throws LangDetectException
-	 */
-    private synchronized static void init() throws LangDetectException {
-        if ( firstTime ) {
-            DetectorFactory.loadProfile(profileDirectory);
-        } 
-        firstTime = false;
-    }
     
-    /**
-     * Dado una texto, detecta los lenguajes en los que posiblemente esté escrito. 
-     * En funcion a los perfiles de lenguajes cargados.
-     * 
-     * @param text
-     * @return Una lista de los lenguajes con la probabilidad de que el texto pertenesca a este.
-     * @throws LangDetectException
-     */
-    private ArrayList<Language> detectLangs(String text) throws LangDetectException {
-        Detector detector = DetectorFactory.create();
-        detector.append(text);
-        return detector.getProbabilities();
-    }
-
     
     @Override
 	public List<Tag> detectLanguage(String text) {
-        try {
-            init() ;
-        } catch (LangDetectException e1) {
-            // TODO Auto-generated catch block
-            e1.printStackTrace();
-        }
-	    List<Tag> result = new ArrayList<Tag>() ;
-	    List<Language> langs;
-        try {
-            langs = detectLangs( text );
-            for (Language l : langs) {
-                Tag t = new Tag() ;
-                t.language = l.lang ;
-                t.probability = (float) l.prob ;
-                result.add( t ) ;
-            }
-
-        } catch (LangDetectException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        }
-		return result;
-
+        UberLanguageDetector detector = UberLanguageDetector.getInstance();
+        String language = detector.detectLang(text);
+        Tag tag = new Tag() ;
+        tag.language = language ;
+        tag.probability = 1 ;
+        List<Tag> l = new ArrayList<Tag>() ;
+        l.add( tag ) ;
+        return l ;
 	}
     
-
 
 
     /**
@@ -100,8 +52,13 @@ public class Text implements IText {
         List<org.mcavallo.opencloud.Tag> l = cloud.tags() ;
         Collections.sort( l, new TagComparator() );
         for (org.mcavallo.opencloud.Tag t : l) {
-            result.add( t.getName()  ) ;
+            if ( t.getScore() > 1) {
+                result.add( t.getName()  ) ;                
+            }
         }          
+        
+        result = new ArrayList<String>() ;
+
         return result;
         
     }
@@ -121,6 +78,7 @@ public class Text implements IText {
                         "Suggested correction: " +
                         match.getSuggestedReplacements() + "\n";                
             } 
+            suggestions.replace( "<", "[" ).replace( ">", "]" ) ;
             
             return suggestions;
             

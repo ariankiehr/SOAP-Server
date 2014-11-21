@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<endpoints
+  xmlns="http://java.sun.com/xml/ns/jax-ws/ri/runtime"
+  version="2.0">
+  <endpoint name="Text" implementation="com.soap.ws.text.Text" url-pattern="/Text"/>
+  <endpoint name="Mail" implementation="com.soap.ws.mail.Mail" url-pattern="/Mail"/>
+  <endpoint name="Hash" implementation="com.soap.ws.hash.Hash" url-pattern="/Hash"/>
+
+
+</endpoints>
